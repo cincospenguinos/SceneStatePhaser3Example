@@ -28,6 +28,10 @@ class Switch extends Phaser.GameObjects.Sprite {
 const WIDTH = 800;
 const HEIGHT = 600;
 
+const ALL_STATES = {
+	NO: 'NO',
+};
+
 class MainScene extends Phaser.Scene {
 	constructor() {
 		super({ key: 'Scene' });
@@ -47,7 +51,7 @@ class MainScene extends Phaser.Scene {
 			d: new Switch(this, { x: 650, y: 500, key: 'D' }),
 		};
 
-		this.state = 'NO';
+		this.state = ALL_STATES.NO;
 	}
 
 	get currentState() {
@@ -63,7 +67,7 @@ class MainScene extends Phaser.Scene {
 		let y = 0;
 
 		switch(this.currentState) {
-			case 'NO': {
+			case ALL_STATES.NO: {
 				break;
 			}
 			case 'R': {
@@ -92,7 +96,7 @@ class MainScene extends Phaser.Scene {
 			this.text.y += y;
 		}
 
-		if (this.currentState === 'NO') {
+		if (this.currentState === ALL_STATES.NO) {
 			if (this.switches.a.isOn && !this.switches.b.isOn) {
 				this.currentState = 'R';
 			} else if (this.switches.d.isOn) {
@@ -102,7 +106,7 @@ class MainScene extends Phaser.Scene {
 			}
 		} else if (this.currentState === 'R') {
 			if (this.switches.b.isOn) {
-				this.currentState = 'NO';
+				this.currentState = ALL_STATES.NO;
 			} else if (this.switches.d.isOn) {
 				this.currentState = 'L';
 			}
@@ -114,7 +118,7 @@ class MainScene extends Phaser.Scene {
 			}
 		} else if (this.currentState === 'D') {
 			if (this.switches.a.isOn && !this.switches.c.isOn) {
-				this.currentState = 'NO';
+				this.currentState = ALL_STATES.NO;
 			}
 		} else if (this.currentState === 'U') {
 			if (!this.switches.a.isOn && this.switches.c.isOn) {
