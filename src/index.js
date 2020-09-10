@@ -74,15 +74,11 @@ class MainScene extends Phaser.Scene {
 			this.text.y += this.currentState.y;
 		}
 
-		const movedStates = [MainScene.STATES.NO, MainScene.STATES.LEFT, MainScene.STATES.RIGHT];
+		const movedStates = [MainScene.STATES.NO, MainScene.STATES.LEFT, MainScene.STATES.RIGHT, MainScene.STATES.DOWN];
 
 		if (movedStates.includes(this.currentState)) {
 			const nextStateKey = this.currentState.transition(this.switches);
 			this.currentState = MainScene.STATES[nextStateKey];
-		} else if (this.currentState === MainScene.STATES.DOWN) {
-			if (this.switches.a.isOn && !this.switches.c.isOn) {
-				this.currentState = MainScene.STATES.NO;
-			}
 		} else if (this.currentState === MainScene.STATES.UP) {
 			if (!this.switches.a.isOn && this.switches.c.isOn) {
 				this.currentState = MainScene.STATES.RIGHT;
@@ -203,13 +199,27 @@ class RightState extends MovementState {
 	}
 }
 
+class DownState extends MovementState {
+	constructor() {
+		super(0, MainScene.VELOCITY, StateStrings.DOWN);
+	}
+
+	transition(switches) {
+		if (switches.a.isOn && !switches.c.isOn) {
+			return this.no;
+		}
+
+		return super.transition(switches);
+	}
+}
+
 MainScene.VELOCITY = 2;
 MainScene.STATES = {
 	NO: new NoState(),
 	LEFT: new LeftState(),
 	RIGHT: new RightState(),
+	DOWN: new DownState(),
 	UP: new MovementState(0, -MainScene.VELOCITY, StateStrings.UP),
-	DOWN: new MovementState(0, MainScene.VELOCITY, StateStrings.DOWN),
 };
 
 const config = {
