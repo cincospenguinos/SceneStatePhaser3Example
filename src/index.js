@@ -141,9 +141,13 @@ class NoState extends MovementState {
 	transition(switches) {
 		if (switches.a.isOn && !switches.b.isOn) {
 			return StateKeys[StateStrings.RIGHT];
-		} else if (switches.d.isOn) {
+		}
+
+		if (switches.d.isOn) {
 			return StateKeys[StateStrings.UP];
-		} else if (!switches.a.isOn && switches.c.isOn) {
+		}
+
+		if (!switches.a.isOn && switches.c.isOn) {
 			return StateKeys[StateStrings.LEFT];
 		}
 
