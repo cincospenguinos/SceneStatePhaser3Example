@@ -30,6 +30,10 @@ const HEIGHT = 600;
 
 const ALL_STATES = {
 	NO: 'NO',
+	LEFT: 'L',
+	RIGHT: 'R',
+	UP: 'U',
+	DOWN: 'D',
 };
 
 class MainScene extends Phaser.Scene {
@@ -70,19 +74,19 @@ class MainScene extends Phaser.Scene {
 			case ALL_STATES.NO: {
 				break;
 			}
-			case 'R': {
+			case ALL_STATES.RIGHT: {
 				x = MainScene.VELOCITY;
 				break;
 			}
-			case 'U': {
+			case ALL_STATES.UP: {
 				y = -MainScene.VELOCITY;
 				break;
 			}
-			case 'L': {
+			case ALL_STATES.LEFT: {
 				x = -MainScene.VELOCITY;
 				break;
 			}
-			case 'D': {
+			case ALL_STATES.D: {
 				y = MainScene.VELOCITY;
 				break;
 			}
@@ -98,31 +102,31 @@ class MainScene extends Phaser.Scene {
 
 		if (this.currentState === ALL_STATES.NO) {
 			if (this.switches.a.isOn && !this.switches.b.isOn) {
-				this.currentState = 'R';
+				this.currentState = ALL_STATES.RIGHT;
 			} else if (this.switches.d.isOn) {
-				this.currentState = 'U';
+				this.currentState = ALL_STATES.UP;
 			} else if (!this.switches.a.isOn && this.switches.c.isOn) {
-				this.currentState = 'L';
+				this.currentState = ALL_STATES.LEFT;
 			}
-		} else if (this.currentState === 'R') {
+		} else if (this.currentState === ALL_STATES.RIGHT) {
 			if (this.switches.b.isOn) {
 				this.currentState = ALL_STATES.NO;
 			} else if (this.switches.d.isOn) {
-				this.currentState = 'L';
+				this.currentState = ALL_STATES.LEFT;
 			}
-		} else if (this.currentState === 'L') {
+		} else if (this.currentState === ALL_STATES.LEFT) {
 			if (!this.switches.d.isOn && !(this.switches.a.isOn || this.switches.b.isOn)) {
-				this.currentState = 'U';
+				this.currentState = ALL_STATES.UP;
 			} else if (!this.switches.d.isOn && this.switches.b.isOn) {
-				this.currentState = 'D';
+				this.currentState = ALL_STATES.D;
 			}
-		} else if (this.currentState === 'D') {
+		} else if (this.currentState === ALL_STATES.D) {
 			if (this.switches.a.isOn && !this.switches.c.isOn) {
 				this.currentState = ALL_STATES.NO;
 			}
-		} else if (this.currentState === 'U') {
+		} else if (this.currentState === ALL_STATES.UP) {
 			if (!this.switches.a.isOn && this.switches.c.isOn) {
-				this.currentState = 'R';
+				this.currentState = ALL_STATES.RIGHT;
 			}
 		}
 	}
