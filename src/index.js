@@ -38,8 +38,6 @@ class MainScene extends Phaser.Scene {
 	}
 
 	create() {
-		this.text = this.add.text(320, 300, 'Make me move!');
-
 		this.switches = {
 			a: new Switch(this, { x: 100, y: 500, key: 'A' }),
 			b: new Switch(this, { x: 250, y: 500, key: 'B' }),
@@ -47,6 +45,7 @@ class MainScene extends Phaser.Scene {
 			d: new Switch(this, { x: 650, y: 500, key: 'D' }),
 		};
 
+		this.text = this.add.text(320, 300, 'Make me move!');
 		this.state = MainScene.STATES.NO;
 	}
 
@@ -59,37 +58,12 @@ class MainScene extends Phaser.Scene {
 	}
 
 	update() {
-		let x = 0;
-		let y = 0;
-
-		switch(this.currentState.key) {
-			case MainScene.STATES.NO.key: {
-				break;
-			}
-			case MainScene.STATES.RIGHT.key: {
-				x = MainScene.VELOCITY;
-				break;
-			}
-			case MainScene.STATES.UP.key: {
-				y = -MainScene.VELOCITY;
-				break;
-			}
-			case MainScene.STATES.LEFT.key: {
-				x = -MainScene.VELOCITY;
-				break;
-			}
-			case MainScene.STATES.DOWN.key: {
-				y = MainScene.VELOCITY;
-				break;
-			}
-		}
-
 		if (this.text.x < (WIDTH - this.text.width) && this.text.x > 0) {
-			this.text.x += x;
+			this.text.x += this.currentState.x;
 		}
 
 		if (this.text.y < (HEIGHT - this.text.height) && this.text.y > 0) {
-			this.text.y += y;
+			this.text.y += this.currentState.y;
 		}
 
 		if (this.currentState === MainScene.STATES.NO) {
