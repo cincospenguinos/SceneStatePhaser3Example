@@ -58,11 +58,11 @@ class MainScene extends Phaser.Scene {
 	}
 
 	update() {
-		if (this.text.x < (WIDTH - this.text.width) && this.text.x > 0) {
+		if (this.moveX) {
 			this.text.x += this.currentState.x;
 		}
 
-		if (this.text.y < (HEIGHT - this.text.height) && this.text.y > 0) {
+		if (this.moveY) {
 			this.text.y += this.currentState.y;
 		}
 
@@ -95,6 +95,14 @@ class MainScene extends Phaser.Scene {
 				this.currentState = MainScene.STATES.RIGHT;
 			}
 		}
+	}
+
+	get moveX() {
+		return this.text.x < (WIDTH - this.text.width) && this.text.x > 0;
+	}
+
+	get moveY() {
+		return this.text.y < (HEIGHT - this.text.height) && this.text.y > 0;
 	}
 }
 
