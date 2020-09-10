@@ -28,6 +28,22 @@ class Switch extends Phaser.GameObjects.Sprite {
 const WIDTH = 800;
 const HEIGHT = 600;
 
+const StateStrings = {
+	NO: 'NO',
+	LEFT: 'L',
+	RIGHT: 'R',
+	UP: 'U',
+	DOWN: 'D',
+};
+
+const StateKeys = {
+	NO: 'NO',
+	L: 'LEFT',
+	R: 'RIGHT',
+	U: 'UP',
+	D: 'DOWN',
+};
+
 class MainScene extends Phaser.Scene {
 	constructor() {
 		super({ key: 'Scene' });
@@ -75,6 +91,8 @@ class MainScene extends Phaser.Scene {
 				this.currentState = MainScene.STATES.RIGHT;
 			}
 		}
+
+		this.text.setText(StateKeys[this.currentState.key]);
 	}
 
 	get currentState() {
@@ -93,22 +111,6 @@ class MainScene extends Phaser.Scene {
 		return this.text.y < (HEIGHT - this.text.height) && this.text.y > 0;
 	}
 }
-
-const StateStrings = {
-	NO: 'NO',
-	LEFT: 'L',
-	RIGHT: 'R',
-	UP: 'U',
-	DOWN: 'D',
-};
-
-const StateKeys = {
-	NO: 'NO',
-	L: 'LEFT',
-	R: 'RIGHT',
-	U: 'UP',
-	D: 'DOWN',
-};
 
 /**
  * Represents the state that causes movement.
