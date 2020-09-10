@@ -28,14 +28,6 @@ class Switch extends Phaser.GameObjects.Sprite {
 const WIDTH = 800;
 const HEIGHT = 600;
 
-const ALL_STATES = {
-	NO: 'NO',
-	LEFT: 'L',
-	RIGHT: 'R',
-	UP: 'U',
-	DOWN: 'D',
-};
-
 class MainScene extends Phaser.Scene {
 	constructor() {
 		super({ key: 'Scene' });
@@ -55,7 +47,7 @@ class MainScene extends Phaser.Scene {
 			d: new Switch(this, { x: 650, y: 500, key: 'D' }),
 		};
 
-		this.state = ALL_STATES.NO;
+		this.state = MainScene.STATES.NO;
 	}
 
 	get currentState() {
@@ -71,22 +63,22 @@ class MainScene extends Phaser.Scene {
 		let y = 0;
 
 		switch(this.currentState) {
-			case ALL_STATES.NO: {
+			case MainScene.STATES.NO: {
 				break;
 			}
-			case ALL_STATES.RIGHT: {
+			case MainScene.STATES.RIGHT: {
 				x = MainScene.VELOCITY;
 				break;
 			}
-			case ALL_STATES.UP: {
+			case MainScene.STATES.UP: {
 				y = -MainScene.VELOCITY;
 				break;
 			}
-			case ALL_STATES.LEFT: {
+			case MainScene.STATES.LEFT: {
 				x = -MainScene.VELOCITY;
 				break;
 			}
-			case ALL_STATES.D: {
+			case MainScene.STATES.D: {
 				y = MainScene.VELOCITY;
 				break;
 			}
@@ -100,39 +92,46 @@ class MainScene extends Phaser.Scene {
 			this.text.y += y;
 		}
 
-		if (this.currentState === ALL_STATES.NO) {
+		if (this.currentState === MainScene.STATES.NO) {
 			if (this.switches.a.isOn && !this.switches.b.isOn) {
-				this.currentState = ALL_STATES.RIGHT;
+				this.currentState = MainScene.STATES.RIGHT;
 			} else if (this.switches.d.isOn) {
-				this.currentState = ALL_STATES.UP;
+				this.currentState = MainScene.STATES.UP;
 			} else if (!this.switches.a.isOn && this.switches.c.isOn) {
-				this.currentState = ALL_STATES.LEFT;
+				this.currentState = MainScene.STATES.LEFT;
 			}
-		} else if (this.currentState === ALL_STATES.RIGHT) {
+		} else if (this.currentState === MainScene.STATES.RIGHT) {
 			if (this.switches.b.isOn) {
-				this.currentState = ALL_STATES.NO;
+				this.currentState = MainScene.STATES.NO;
 			} else if (this.switches.d.isOn) {
-				this.currentState = ALL_STATES.LEFT;
+				this.currentState = MainScene.STATES.LEFT;
 			}
-		} else if (this.currentState === ALL_STATES.LEFT) {
+		} else if (this.currentState === MainScene.STATES.LEFT) {
 			if (!this.switches.d.isOn && !(this.switches.a.isOn || this.switches.b.isOn)) {
-				this.currentState = ALL_STATES.UP;
+				this.currentState = MainScene.STATES.UP;
 			} else if (!this.switches.d.isOn && this.switches.b.isOn) {
-				this.currentState = ALL_STATES.D;
+				this.currentState = MainScene.STATES.D;
 			}
-		} else if (this.currentState === ALL_STATES.D) {
+		} else if (this.currentState === MainScene.STATES.D) {
 			if (this.switches.a.isOn && !this.switches.c.isOn) {
-				this.currentState = ALL_STATES.NO;
+				this.currentState = MainScene.STATES.NO;
 			}
-		} else if (this.currentState === ALL_STATES.UP) {
+		} else if (this.currentState === MainScene.STATES.UP) {
 			if (!this.switches.a.isOn && this.switches.c.isOn) {
-				this.currentState = ALL_STATES.RIGHT;
+				this.currentState = MainScene.STATES.RIGHT;
 			}
 		}
 	}
 }
 
 MainScene.VELOCITY = 2;
+MainScene.STATES = {
+	NO: 'NO',
+	LEFT: 'L',
+	RIGHT: 'R',
+	UP: 'U',
+	DOWN: 'D',
+};
 
 const config = {
 	type: Phaser.AUTO,
