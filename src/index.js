@@ -79,9 +79,6 @@ class MainScene extends Phaser.Scene {
 		if (movedStates.includes(this.currentState)) {
 			const nextStateKey = this.currentState.transition(this.switches);
 			this.currentState = MainScene.STATES[nextStateKey];
-		} else if (this.currentState === MainScene.STATES.LEFT) {
-			const nextStateKey = this.currentState.transition(this.switches);
-			this.currentState = MainScene.STATES[nextStateKey];
 		} else if (this.currentState === MainScene.STATES.DOWN) {
 			if (this.switches.a.isOn && !this.switches.c.isOn) {
 				this.currentState = MainScene.STATES.NO;
