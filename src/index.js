@@ -62,23 +62,23 @@ class MainScene extends Phaser.Scene {
 		let x = 0;
 		let y = 0;
 
-		switch(this.currentState) {
-			case MainScene.STATES.NO: {
+		switch(this.currentState.key) {
+			case MainScene.STATES.NO.key: {
 				break;
 			}
-			case MainScene.STATES.RIGHT: {
+			case MainScene.STATES.RIGHT.key: {
 				x = MainScene.VELOCITY;
 				break;
 			}
-			case MainScene.STATES.UP: {
+			case MainScene.STATES.UP.key: {
 				y = -MainScene.VELOCITY;
 				break;
 			}
-			case MainScene.STATES.LEFT: {
+			case MainScene.STATES.LEFT.key: {
 				x = -MainScene.VELOCITY;
 				break;
 			}
-			case MainScene.STATES.D: {
+			case MainScene.STATES.DOWN.key: {
 				y = MainScene.VELOCITY;
 				break;
 			}
@@ -110,9 +110,9 @@ class MainScene extends Phaser.Scene {
 			if (!this.switches.d.isOn && !(this.switches.a.isOn || this.switches.b.isOn)) {
 				this.currentState = MainScene.STATES.UP;
 			} else if (!this.switches.d.isOn && this.switches.b.isOn) {
-				this.currentState = MainScene.STATES.D;
+				this.currentState = MainScene.STATES.DOWN;
 			}
-		} else if (this.currentState === MainScene.STATES.D) {
+		} else if (this.currentState === MainScene.STATES.DOWN) {
 			if (this.switches.a.isOn && !this.switches.c.isOn) {
 				this.currentState = MainScene.STATES.NO;
 			}
@@ -124,13 +124,21 @@ class MainScene extends Phaser.Scene {
 	}
 }
 
+class MovementState {
+	constructor(x, y, key) {
+		this.key = key;
+		this.x = x;
+		this.y = y;
+	}
+}
+
 MainScene.VELOCITY = 2;
 MainScene.STATES = {
-	NO: 'NO',
-	LEFT: 'L',
-	RIGHT: 'R',
-	UP: 'U',
-	DOWN: 'D',
+	NO: new MovementState(0, 0, 'NO'),
+	LEFT: new MovementState(-MainScene.VELOCITY, 0, 'L'),
+	RIGHT: new MovementState(MainScene.VELOCITY, 0, 'R'),
+	UP: new MovementState(0, -MainScene.VELOCITY, 'U'),
+	DOWN: new MovementState(0, MainScene.VELOCITY, 'D'),
 };
 
 const config = {
