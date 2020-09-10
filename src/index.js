@@ -106,12 +106,20 @@ class MainScene extends Phaser.Scene {
 	}
 }
 
-const StateKeys = {
+const StateStrings = {
 	NO: 'NO',
 	LEFT: 'L',
 	RIGHT: 'R',
 	UP: 'U',
 	DOWN: 'D',
+};
+
+const StateKeys = {
+	NO: 'NO',
+	L: 'LEFT',
+	R: 'RIGHT',
+	U: 'UP',
+	D: 'DOWN',
 };
 
 /**
@@ -123,15 +131,26 @@ class MovementState {
 		this.x = x;
 		this.y = y;
 	}
+
+	/** Returns the key of the state to transition to. No-op is the default behavior. */
+	transition(switches) {
+		return StateKeys[this.key];
+	}
+}
+
+class NoState extends MovementState {
+	constructor() {
+		super(0, 0, StateStrings.NO);
+	}
 }
 
 MainScene.VELOCITY = 2;
 MainScene.STATES = {
-	NO: new MovementState(0, 0, StateKeys.NO),
-	LEFT: new MovementState(-MainScene.VELOCITY, 0, StateKeys.LEFT),
-	RIGHT: new MovementState(MainScene.VELOCITY, 0, StateKeys.RIGHT),
-	UP: new MovementState(0, -MainScene.VELOCITY, StateKeys.UP),
-	DOWN: new MovementState(0, MainScene.VELOCITY, StateKeys.DOWN),
+	NO: new NoState(),
+	LEFT: new MovementState(-MainScene.VELOCITY, 0, StateStrings.LEFT),
+	RIGHT: new MovementState(MainScene.VELOCITY, 0, StateStrings.RIGHT),
+	UP: new MovementState(0, -MainScene.VELOCITY, StateStrings.UP),
+	DOWN: new MovementState(0, MainScene.VELOCITY, StateStrings.DOWN),
 };
 
 const config = {
