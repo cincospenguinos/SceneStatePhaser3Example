@@ -74,13 +74,8 @@ class MainScene extends Phaser.Scene {
 			this.text.y += this.currentState.y;
 		}
 
-		const movedStates = [MainScene.STATES.NO, MainScene.STATES.LEFT, MainScene.STATES.RIGHT, MainScene.STATES.DOWN, MainScene.STATES.UP];
-
-		if (movedStates.includes(this.currentState)) {
-			const nextStateKey = this.currentState.transition(this.switches);
-			this.currentState = MainScene.STATES[nextStateKey];
-		}
-
+		const nextStateKey = this.currentState.transition(this.switches);
+		this.currentState = MainScene.STATES[nextStateKey];
 		this.text.setText(StateKeys[this.currentState.key]);
 	}
 
