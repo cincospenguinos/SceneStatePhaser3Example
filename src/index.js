@@ -130,6 +130,22 @@ class MovementState {
 	transition(switches) {
 		return StateKeys[this.key];
 	}
+
+	get up() {
+		return StateKeys[StateStrings.UP];
+	}
+
+	get down() {
+		return StateKeys[StateStrings.DOWN];
+	}
+
+	get left() {
+		return StateKeys[StateStrings.LEFT];
+	}
+
+	get right() {
+		return StateKeys[StateStrings.RIGHT];
+	}
 }
 
 class NoState extends MovementState {
@@ -139,15 +155,15 @@ class NoState extends MovementState {
 
 	transition(switches) {
 		if (switches.a.isOn && !switches.b.isOn) {
-			return StateKeys[StateStrings.RIGHT];
+			return this.right;
 		}
 
 		if (switches.d.isOn) {
-			return StateKeys[StateStrings.UP];
+			return this.up;
 		}
 
 		if (!switches.a.isOn && switches.c.isOn) {
-			return StateKeys[StateStrings.LEFT];
+			return this.left;
 		}
 
 		return super.transition(switches);
@@ -161,11 +177,11 @@ class LeftState extends MovementState {
 
 	transition(switches) {
 		if (!switches.d.isOn && !(switches.a.isOn || switches.b.isOn)) {
-			return StateKeys[StateStrings.UP];
+			return this.up;
 		} 
 
 		if (!switches.d.isOn && switches.b.isOn) {
-			return StateKeys[StateStrings.DOWN];
+			return this.down;
 		}
 
 		return super.transition(switches);
