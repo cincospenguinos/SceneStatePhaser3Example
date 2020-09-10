@@ -49,14 +49,6 @@ class MainScene extends Phaser.Scene {
 		this.state = MainScene.STATES.NO;
 	}
 
-	get currentState() {
-		return this.state;
-	}
-
-	set currentState(state) {
-		this.state = state;
-	}
-
 	update() {
 		if (this.moveX) {
 			this.text.x += this.currentState.x;
@@ -97,6 +89,14 @@ class MainScene extends Phaser.Scene {
 		}
 	}
 
+	get currentState() {
+		return this.state;
+	}
+
+	set currentState(state) {
+		this.state = state;
+	}
+
 	get moveX() {
 		return this.text.x < (WIDTH - this.text.width) && this.text.x > 0;
 	}
@@ -106,6 +106,17 @@ class MainScene extends Phaser.Scene {
 	}
 }
 
+const StateKeys = {
+	NO: 'NO',
+	LEFT: 'L',
+	RIGHT: 'R',
+	UP: 'U',
+	DOWN: 'D',
+};
+
+/**
+ * Represents the state that causes movement.
+ */
 class MovementState {
 	constructor(x, y, key) {
 		this.key = key;
@@ -116,11 +127,11 @@ class MovementState {
 
 MainScene.VELOCITY = 2;
 MainScene.STATES = {
-	NO: new MovementState(0, 0, 'NO'),
-	LEFT: new MovementState(-MainScene.VELOCITY, 0, 'L'),
-	RIGHT: new MovementState(MainScene.VELOCITY, 0, 'R'),
-	UP: new MovementState(0, -MainScene.VELOCITY, 'U'),
-	DOWN: new MovementState(0, MainScene.VELOCITY, 'D'),
+	NO: new MovementState(0, 0, StateKeys.NO),
+	LEFT: new MovementState(-MainScene.VELOCITY, 0, StateKeys.LEFT),
+	RIGHT: new MovementState(MainScene.VELOCITY, 0, StateKeys.RIGHT),
+	UP: new MovementState(0, -MainScene.VELOCITY, StateKeys.UP),
+	DOWN: new MovementState(0, MainScene.VELOCITY, StateKeys.DOWN),
 };
 
 const config = {
