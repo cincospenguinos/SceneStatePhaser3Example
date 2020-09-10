@@ -47,7 +47,15 @@ class MainScene extends Phaser.Scene {
 			d: new Switch(this, { x: 650, y: 500, key: 'D' }),
 		};
 
-		this.currentState = 'NO';
+		this.state = 'NO';
+	}
+
+	get currentState() {
+		return this.state;
+	}
+
+	set currentState(state) {
+		this.state = state;
 	}
 
 	update() {
