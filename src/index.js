@@ -59,13 +59,8 @@ class MainScene extends Phaser.Scene {
 		}
 
 		if (this.currentState === MainScene.STATES.NO) {
-			if (this.switches.a.isOn && !this.switches.b.isOn) {
-				this.currentState = MainScene.STATES.RIGHT;
-			} else if (this.switches.d.isOn) {
-				this.currentState = MainScene.STATES.UP;
-			} else if (!this.switches.a.isOn && this.switches.c.isOn) {
-				this.currentState = MainScene.STATES.LEFT;
-			}
+			const nextStateKey = this.currentState.transition(this.switches);
+			this.currentState = MainScene.STATES[nextStateKey];
 		} else if (this.currentState === MainScene.STATES.RIGHT) {
 			if (this.switches.b.isOn) {
 				this.currentState = MainScene.STATES.NO;
@@ -141,6 +136,18 @@ class MovementState {
 class NoState extends MovementState {
 	constructor() {
 		super(0, 0, StateStrings.NO);
+	}
+
+	transition(switches) {
+		if (switches.a.isOn && !switches.b.isOn) {
+			return StateKeys[StateStrings.RIGHT];
+		} else if (switches.d.isOn) {
+			return StateKeys[StateStrings.UP];
+		} else if (!switches.a.isOn && switches.c.isOn) {
+			return StateKeys[StateStrings.LEFT];
+		}
+
+		return super.transition(switches);
 	}
 }
 
